@@ -5,6 +5,7 @@
 import time
 import subprocess
 import tinycircuits_wireling
+import os
 
 PORT = 3 # change if using different port
 HOLD_TIME = 2 # seconds
@@ -16,14 +17,17 @@ print('Power button monitor running. Hold button to shut down.')
 pressed_since = None
 
 while True:
-    state = wireling.digtialRead(PORT) # 0 = presssed, 1 = not pressed
+    state = wireling.digitalRead(PORT) # 0 = presssed, 1 = not pressed
 
     if state == 0:
         if pressed_since is None:
             pressed_since = time.time()
         elif time.time() - pressed_since >= HOLD_TIME:
+            print('pressed since', pressed_since)
             print('Shutting down...')
+            print(time.time() - pressed_since)
             subprocess.run(['sudo', 'shutdown', '-h', 'now'])
+            os.system('sudo shutdown -h now')
             break
     else:
         pressed_since = None # reset if released early

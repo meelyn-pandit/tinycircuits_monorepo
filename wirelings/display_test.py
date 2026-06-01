@@ -12,7 +12,7 @@ wireling = tinycircuits_wireling.Wireling()
 i2c = busio.I2C(board.SCL, board.SDA)
 
 # wireling port
-port = 1
+port = 0
 reset_pin = DigitalInOut(wireling.getBoardPin(port))
 wireling.selectPort(port)
 
